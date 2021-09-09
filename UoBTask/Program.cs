@@ -5,11 +5,10 @@ namespace UoBTask
 {
     class Program
     {
-        static char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
-
-
-
-
+        private static char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+        private const int Offset = 65;
+        private const char SpacerChar = '*';
+        private static StringBuilder Sb = new StringBuilder();
 
         static void Main(string[] args)
         {
@@ -27,54 +26,54 @@ namespace UoBTask
                 {
                     var limit = input.ToUpper().ToCharArray()[0];
 
-                    const int offset = 65;
-                    var spacerChar = '*';
-
-                    var sb = new StringBuilder();
-
-                    foreach (var c in alphabet)
-                    {
-                        if ((int) c <= (int) limit)
-                        {
-
-
-                            var index = (int) c - offset;
-                            var charval = (int) c;
-
-                            for (int i = 0; i <= 24 - index; i++)
-                            {
-                                sb.Append($"{spacerChar}");
-                            }
-
-                            sb.Append($"{c}");
-
-                            if (index > 0)
-                            {
-                                for (int i = 0; i <= index * 2; i++)
-                                {
-                                    sb.Append(spacerChar);
-                                }
-
-                                sb.Append(c);
-                            }
-
-                            sb.Append(Environment.NewLine);
-                        }
-                        else
-                        {
-                            var _content = sb.ToString();
-
-                            for (int i = sb.Length; i == 0; i--)
-                            {
-                                sb.Append(_content[i]);
-                            }
-                            //Console.WriteLine($"{sb..Length} lines in the stringbuilder");
-                        }
-                    }
-                    Console.Write(sb.ToString());
-
+                    Generate(limit);
                 }
             }
         }
+
+        static void Generate(char limit)
+        {
+            Sb.Clear();
+
+            Console.WriteLine($"Generate({limit})");
+
+            var arrIndex = (int) limit - Offset;
+
+            for (int i = 0; i <= arrIndex; i++)
+            {
+                BuildLine(alphabet[i]);
+            }
+
+            for (int i = arrIndex-1; i >= 0; i--)
+            {
+                BuildLine(alphabet[i]);
+            }
+
+            Console.Write(Sb.ToString());
+        }
+
+        private static void BuildLine(char c)
+        {
+            var current = c;
+            var index = (int)c - Offset;
+
+            for (int i1 = 0; i1 <= 24 - index; i1++)
+            {
+                Sb.Append($"{SpacerChar}");
+            }
+
+            Sb.Append(current);
+            if (index > 0)
+            {
+                for (int i2 = 0; i2 <= index * 2; i2++)
+                {
+                    Sb.Append(SpacerChar);
+                }
+
+                Sb.Append(current);
+            }
+            Sb.Append(Environment.NewLine);
+        }
+
     }
 }

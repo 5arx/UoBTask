@@ -21,6 +21,8 @@ namespace UoBTask
                 var index = (int)c - offset;
                 var charval = (int)c;
 
+
+
                 for (int i = 0; i <= 24 - index; i++)
                 {
                     sb.Append($"{spacerChar}");

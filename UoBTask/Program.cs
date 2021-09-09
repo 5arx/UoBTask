@@ -7,7 +7,7 @@ namespace UoBTask
     {
         private static char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
         private const int Offset = 65;
-        private const char SpacerChar = '*';
+        private const char SpacerChar = ' ';
         private static StringBuilder Sb = new StringBuilder();
 
         static void Main(string[] args)
@@ -18,14 +18,15 @@ namespace UoBTask
 
                 var input = Console.ReadLine();
 
-                if (string.IsNullOrWhiteSpace(input) || string.IsNullOrEmpty(input))
+                if (string.IsNullOrWhiteSpace(input) || string.IsNullOrEmpty(input)
+                || ! char.IsLetter(input.ToCharArray()[0])
+                )
                 {
-                    Console.WriteLine("Error! Please enter a letter between a and z");
+                    Console.WriteLine("Invalid input! Please enter a letter between a and z");
                 }
                 else
                 {
                     var limit = input.ToUpper().ToCharArray()[0];
-
                     Generate(limit);
                 }
             }
@@ -35,7 +36,7 @@ namespace UoBTask
         {
             Sb.Clear();
 
-            Console.WriteLine($"Generate({limit})");
+            Console.WriteLine($"Printing diamond for '{limit}'");
 
             var arrIndex = (int) limit - Offset;
 
@@ -63,6 +64,7 @@ namespace UoBTask
             }
 
             Sb.Append(current);
+
             if (index > 0)
             {
                 for (int i2 = 0; i2 <= index * 2; i2++)
